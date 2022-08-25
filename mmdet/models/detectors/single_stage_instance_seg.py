@@ -62,7 +62,6 @@ class SingleStageInstanceSegmentor(BaseDetector):
 
     def forward_dummy(self, img):
         """Used for computing network flops.
-
         See `mmdetection/tools/analysis_tools/get_flops.py`
         """
         raise NotImplementedError(
@@ -93,7 +92,6 @@ class SingleStageInstanceSegmentor(BaseDetector):
                 Default: None.
             gt_bboxes_ignore (list[Tensor] | None): Specify which bounding
                 boxes can be ignored when computing the loss.
-
         Returns:
             dict[str, Tensor]: A dictionary of loss components.
         """
@@ -141,18 +139,15 @@ class SingleStageInstanceSegmentor(BaseDetector):
 
     def simple_test(self, img, img_metas, rescale=False):
         """Test function without test-time augmentation.
-
         Args:
             img (torch.Tensor): Images with shape (B, C, H, W).
             img_metas (list[dict]): List of image information.
             rescale (bool, optional): Whether to rescale the results.
                 Defaults to False.
-
         Returns:
             list(tuple): Formatted bbox and mask results of multiple \
                 images. The outer list corresponds to each image. \
                 Each tuple contains two type of results of single image:
-
                 - bbox_results (list[np.ndarray]): BBox results of
                   single image. The list corresponds to each class.
                   each ndarray has a shape (N, 5), N is the number of
@@ -184,21 +179,17 @@ class SingleStageInstanceSegmentor(BaseDetector):
     def format_results(self, results):
         """Format the model predictions according to the interface with
         dataset.
-
         Args:
             results (:obj:`InstanceData`): Processed
                 results of single images. Usually contains
                 following keys.
-
                 - scores (Tensor): Classification scores, has shape
                   (num_instance,)
                 - labels (Tensor): Has shape (num_instances,).
                 - masks (Tensor): Processed mask results, has
                   shape (num_instances, h, w).
-
         Returns:
             tuple: Formatted bbox and mask results.. It contains two items:
-
                 - bbox_results (list[np.ndarray]): BBox results of
                   single image. The list corresponds to each class.
                   each ndarray has a shape (N, 5), N is the number of
@@ -264,14 +255,13 @@ class SingleStageInstanceSegmentor(BaseDetector):
                     win_name='',
                     show=False,
                     wait_time=0,
-                    out_file=None):
+                    out_file=None,
+                    opacity=0.8):
         """Draw `result` over `img`.
-
         Args:
             img (str or Tensor): The image to be displayed.
             result (tuple): Format bbox and mask results.
                 It contains two items:
-
                 - bbox_results (list[np.ndarray]): BBox results of
                   single image. The list corresponds to each class.
                   each ndarray has a shape (N, 5), N is the number of
@@ -281,7 +271,6 @@ class SingleStageInstanceSegmentor(BaseDetector):
                   single image. The list corresponds to each class.
                   each ndarray has shape (N, img_h, img_w), N
                   is the number of masks with this category.
-
             score_thr (float, optional): Minimum score of bboxes to be shown.
                 Default: 0.3.
             bbox_color (str or tuple(int) or :obj:`Color`):Color of bbox lines.
@@ -300,7 +289,6 @@ class SingleStageInstanceSegmentor(BaseDetector):
                 Default: False.
             out_file (str or None): The filename to write the image.
                 Default: None.
-
         Returns:
             img (Tensor): Only if not `show` or `out_file`
         """
@@ -357,7 +345,8 @@ class SingleStageInstanceSegmentor(BaseDetector):
             win_name=win_name,
             show=show,
             wait_time=wait_time,
-            out_file=out_file)
+            out_file=out_file,
+            opacity=opacity)
 
         if not (show or out_file):
             return img

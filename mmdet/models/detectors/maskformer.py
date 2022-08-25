@@ -52,7 +52,6 @@ class MaskFormer(SingleStageDetector):
     def forward_dummy(self, img, img_metas):
         """Used for computing network flops. See
         `mmdetection/tools/analysis_tools/get_flops.py`
-
         Args:
             img (Tensor): of shape (N, C, H, W) encoding input images.
                 Typically these should be mean centered and std scaled.
@@ -96,7 +95,6 @@ class MaskFormer(SingleStageDetector):
             gt_bboxes_ignore (list[Tensor]): specify which bounding
                 boxes can be ignored when computing the loss.
                 Defaults to None.
-
         Returns:
             dict[str, Tensor]: a dictionary of loss components
         """
@@ -112,19 +110,15 @@ class MaskFormer(SingleStageDetector):
 
     def simple_test(self, imgs, img_metas, **kwargs):
         """Test without augmentation.
-
         Args:
             imgs (Tensor): A batch of images.
             img_metas (list[dict]): List of image information.
-
         Returns:
             list[dict[str, np.array | tuple[list]] | tuple[list]]:
                 Semantic segmentation results and panoptic segmentation \
                 results of each image for panoptic segmentation, or formatted \
                 bbox and mask results of each image for instance segmentation.
-
             .. code-block:: none
-
                 [
                     # panoptic segmentation
                     {
@@ -135,11 +129,8 @@ class MaskFormer(SingleStageDetector):
                     },
                     ...
                 ]
-
             or
-
             .. code-block:: none
-
                 [
                     # instance segmentation
                     (
@@ -196,13 +187,12 @@ class MaskFormer(SingleStageDetector):
                          win_name='',
                          show=False,
                          wait_time=0,
-                         out_file=None):
+                         out_file=None,
+                         opacity=0.8):
         """Draw `panoptic result` over `img`.
-
         Args:
             img (str or Tensor): The image to be displayed.
             result (dict): The results.
-
             score_thr (float, optional): Minimum score of bboxes to be shown.
                 Default: 0.3.
             bbox_color (str or tuple(int) or :obj:`Color`):Color of bbox lines.
@@ -221,7 +211,6 @@ class MaskFormer(SingleStageDetector):
                 Default: False.
             out_file (str or None): The filename to write the image.
                 Default: None.
-
         Returns:
             img (Tensor): Only if not `show` or `out_file`.
         """
@@ -252,7 +241,8 @@ class MaskFormer(SingleStageDetector):
             win_name=win_name,
             show=show,
             wait_time=wait_time,
-            out_file=out_file)
+            out_file=out_file,
+            opacity=opacity)
 
         if not (show or out_file):
             return img

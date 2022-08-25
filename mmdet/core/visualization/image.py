@@ -25,10 +25,8 @@ EPS = 1e-2
 def color_val_matplotlib(color):
     """Convert various input in BGR order to normalized RGB matplotlib color
     tuples.
-
     Args:
         color (:obj`Color` | str | tuple | int | ndarray): Color inputs.
-
     Returns:
         tuple[float]: A tuple of 3 normalized floats indicating RGB channels.
     """
@@ -39,11 +37,9 @@ def color_val_matplotlib(color):
 
 def _get_adaptive_scales(areas, min_area=800, max_area=30000):
     """Get adaptive scales according to areas.
-
     The scale range is [0.5, 1.0]. When the area is less than
     ``'min_area'``, the scale is 0.5 while the area is larger than
     ``'max_area'``, the scale is 1.0.
-
     Args:
         areas (ndarray): The areas of bboxes or masks with the
             shape of (n, ).
@@ -51,7 +47,6 @@ def _get_adaptive_scales(areas, min_area=800, max_area=30000):
             Default: 800.
         max_area (int): Upper bound areas for adaptive scales.
             Default: 30000.
-
     Returns:
         ndarray: The adaotive scales with the shape of (n, ).
     """
@@ -62,14 +57,12 @@ def _get_adaptive_scales(areas, min_area=800, max_area=30000):
 
 def _get_bias_color(base, max_dist=30):
     """Get different colors for each masks.
-
     Get different colors for each masks by adding a bias
     color to the base category color.
     Args:
         base (ndarray): The base category color with the shape
             of (3, ).
         max_dist (int): The max distance of bias. Default: 30.
-
     Returns:
         ndarray: The new color for a mask with the shape of (3, ).
     """
@@ -80,7 +73,6 @@ def _get_bias_color(base, max_dist=30):
 
 def draw_bboxes(ax, bboxes, color='g', alpha=0.8, thickness=2):
     """Draw bounding boxes on the axes.
-
     Args:
         ax (matplotlib.Axes): The input axes.
         bboxes (ndarray): The input bounding boxes with the shape
@@ -89,7 +81,6 @@ def draw_bboxes(ax, bboxes, color='g', alpha=0.8, thickness=2):
             bounding boxes.
         alpha (float): Transparency of bounding boxes. Default: 0.8.
         thickness (int): Thickness of lines. Default: 2.
-
     Returns:
         matplotlib.Axes: The result axes.
     """
@@ -121,7 +112,6 @@ def draw_labels(ax,
                 scales=None,
                 horizontal_alignment='left'):
     """Draw labels on the axes.
-
     Args:
         ax (matplotlib.Axes): The input axes.
         labels (ndarray): The labels with the shape of (n, ).
@@ -133,7 +123,6 @@ def draw_labels(ax,
         scales (list[float]): Scales of texts. Default: None.
         horizontal_alignment (str): The horizontal alignment method of
             texts. Default: 'left'.
-
     Returns:
         matplotlib.Axes: The result axes.
     """
@@ -165,7 +154,6 @@ def draw_labels(ax,
 
 def draw_masks(ax, img, masks, color=None, with_edge=True, alpha=0.8):
     """Draw masks on the image and their edges on the axes.
-
     Args:
         ax (matplotlib.Axes): The input axes.
         img (ndarray): The image with the shape of (3, h, w).
@@ -174,7 +162,6 @@ def draw_masks(ax, img, masks, color=None, with_edge=True, alpha=0.8):
             of (n, 3).
         with_edge (bool): Whether to draw edges. Default: True.
         alpha (float): Transparency of bounding boxes. Default: 0.8.
-
     Returns:
         matplotlib.Axes: The result axes.
         ndarray: The result image.
@@ -219,9 +206,9 @@ def imshow_det_bboxes(img,
                       win_name='',
                       show=True,
                       wait_time=0,
-                      out_file=None):
+                      out_file=None,
+                      opacity=0.8):
     """Draw bboxes and class labels (with scores) on an image.
-
     Args:
         img (str | ndarray): The image to be displayed.
         bboxes (ndarray): Bounding boxes (with scores), shaped (n, 4) or
@@ -247,7 +234,6 @@ def imshow_det_bboxes(img,
         wait_time (float): Value of waitKey param. Default: 0.
         out_file (str, optional): The filename to write the image.
             Default: None.
-
     Returns:
         ndarray: The image with bboxes drawn on it.
     """
@@ -323,7 +309,7 @@ def imshow_det_bboxes(img,
         mask_palette = get_palette(mask_color, max_label + 1)
         colors = [mask_palette[label] for label in labels]
         colors = np.array(colors, dtype=np.uint8)
-        draw_masks(ax, img, segms, colors, with_edge=True)
+        draw_masks(ax, img, segms, colors, with_edge=True, alpha=opacity)
 
         if num_bboxes < segms.shape[0]:
             segms = segms[num_bboxes:]
@@ -396,7 +382,6 @@ def imshow_gt_det_bboxes(img,
                          out_file=None,
                          overlay_gt_pred=True):
     """General visualization GT and result function.
-
     Args:
       img (str | ndarray): The image to be displayed.
       annotation (dict): Ground truth annotations where contain keys of
@@ -435,7 +420,6 @@ def imshow_gt_det_bboxes(img,
        image which will be concatenated in vertical direction. The image
        above is drawn with gt, and the image below is drawn with the
        prediction result. Default: True.
-
     Returns:
         ndarray: The image with bboxes or masks drawn on it.
     """
